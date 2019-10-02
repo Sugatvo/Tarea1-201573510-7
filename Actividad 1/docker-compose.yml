@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  # Se crea el container del servidor
+  servidor:
+    build:
+      context: ./servidor
+      dockerfile: Dockerfile
+    image: servidor
+    expose:
+      - "5000"
+    volumes:
+      - ./servidor:/servidor
+    tty: true
+
+  # Se crea el container del cliente
+  cliente:
+    build:
+      context: ./cliente
+      dockerfile: Dockerfile
+    image: cliente
+    expose:
+      - "5000"
+    depends_on:
+      - servidor
+    volumes:
+      - ./cliente:/cliente
+    tty: true

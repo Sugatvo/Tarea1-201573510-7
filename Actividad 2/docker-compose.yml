@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  # Se crea el container del cliente
+  cliente:
+    build:
+      context: ./cliente
+      dockerfile: Dockerfile
+    image: cliente
+    expose:
+      - "5004"
+    depends_on:
+      - headnode
+      - datanode_1
+      - datanode_2
+      - datanode_3
+    volumes:
+      - ./cliente:/cliente
+    tty: true
+
+  # Se crea el container del headnode
+  headnode:
+    build:
+      context: ./headnode
+      dockerfile: Dockerfile
+    image: headnode
+    expose:
+      - "10000"
+      - "5001"
+      - "5002"
+      - "5003"
+      - "5004"
+    volumes:
+      - ./headnode:/headnode
+    tty: true
+
+  # Se crea el container del headnode
+  datanode_1:
+    build:
+      context: ./datanode_1
+      dockerfile: Dockerfile
+    image: datanode_1
+    expose:
+      - "10000"
+      - "5001"
+    volumes:
+      - ./datanode_1:/datanode_1
+    tty: true
+
+  # Se crea el container del headnode
+  datanode_2:
+    build:
+      context: ./datanode_2
+      dockerfile: Dockerfile
+    image: datanode_2
+    expose:
+      - "10000"
+      - "5002"
+    volumes:
+      - ./datanode_2:/datanode_2
+    tty: true
+
+  # Se crea el container del headnode
+  datanode_3:
+    build:
+      context: ./datanode_3
+      dockerfile: Dockerfile
+    image: datanode_3
+    expose:
+      - "10000"
+      - "5003"
+    volumes:
+      - ./datanode_3:/datanode_3
+    tty: true
